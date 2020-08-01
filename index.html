@@ -17,47 +17,59 @@
     <div id="nc_rs"></div>
     <script>
         window.onload = function () {
-            var nc_token = ["FFFF0N000000000094F6", (new Date()).getTime(), Math.random()].join(':');
-            var nc = NoCaptcha.init({
-                renderTo: '#nc',
-                appkey: 'FFFF0N000000000094F6',
-                scene: 'nc_activity_h5',
-                token: nc_token,
-                language: "cn",
-                timeout: 10000,
-                retryTimes: 5,
-                errorTimes: 5,
-                bannerHidden: false,
-                initHidden: false,
-                callback: function (data) {
-                    var obj = {
-                        "nc_token": nc_token,
-                        "csessionid": data.csessionid,
-                        "sig": data.sig
-                    };
-                    rs = document.getElementById('nc_rs');
-                    rs.innerText = JSON.stringify(obj);
-                    console.log(nc_token);
-                    console.log(data.csessionid);
-                    console.log(data.sig);
-                },
-                error: function (s) {
-                    var obj = {
-                        "error": s
-                    };
-                    rs = document.getElementById('nc_rs');
-                    rs.innerText = JSON.stringify(obj);
-                    console.log(s, "验证失败");
-                }
-            });
-            NoCaptcha.setEnabled(true);
-            nc.reset();//请务必确保这里调用一次reset()方法
-            NoCaptcha.upLang('cn', {
-                "LOADING": "加载中...",
-                "SLIDER_LABEL": "请向右滑动验证",
-                "CHECK_Y": "验证通过",
-                "ERROR_TITLE": "非常抱歉，这出错了..."
-            });
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+            var appkey = getParameterByName("appkey");
+            if (appkey) {
+                var nc_token = [a, (new Date()).getTime(), Math.random()].join(':');
+                var nc = NoCaptcha.init({
+                    renderTo: '#nc',
+                    appkey: appkey,
+                    scene: 'nc_activity_h5',
+                    token: nc_token,
+                    language: "cn",
+                    timeout: 10000,
+                    retryTimes: 5,
+                    errorTimes: 5,
+                    bannerHidden: false,
+                    initHidden: false,
+                    callback: function (data) {
+                        var obj = {
+                            "nc_token": nc_token,
+                            "csessionid": data.csessionid,
+                            "sig": data.sig
+                        };
+                        rs = document.getElementById('nc_rs');
+                        rs.innerText = JSON.stringify(obj);
+                        console.log(nc_token);
+                        console.log(data.csessionid);
+                        console.log(data.sig);
+                    },
+                    error: function (s) {
+                        var obj = {
+                            "error": s
+                        };
+                        rs = document.getElementById('nc_rs');
+                        rs.innerText = JSON.stringify(obj);
+                        console.log(s, "验证失败");
+                    }
+                });
+                NoCaptcha.setEnabled(true);
+                nc.reset();//请务必确保这里调用一次reset()方法
+                NoCaptcha.upLang('cn', {
+                    "LOADING": "加载中...",
+                    "SLIDER_LABEL": "请向右滑动验证",
+                    "CHECK_Y": "验证通过",
+                    "ERROR_TITLE": "非常抱歉，这出错了..."
+                });
+            }
         };
     </script>
 </body>
