@@ -14,6 +14,7 @@
     <div id="__nc" style="margin-left:auto;margin-right:auto;width:80%;height:100px;padding-top:100px;">
         <div id="nc"></div>
     </div>
+    <div id="nc_rs"></div>
     <script>
         window.onload = function () {
             var nc_token = ["FFFF0N000000000094F6", (new Date()).getTime(), Math.random()].join(':');
@@ -29,6 +30,13 @@
                 bannerHidden: false,
                 initHidden: false,
                 callback: function (data) {
+                    var obj = {
+                        "nc_token": nc_token,
+                        "csessionid": data.csessionid,
+                        "sig": data.sig
+                    };
+                    rs = document.getElementById('nc_rs');
+                    rs.innerText = JSON.stringify(obj);
                     console.log(nc_token);
                     console.log(data.csessionid);
                     console.log(data.sig);
