@@ -27,8 +27,9 @@
                 return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
             var appkey = getParameterByName("appkey");
+            console.log(appkey);
             if (appkey) {
-                var nc_token = [a, (new Date()).getTime(), Math.random()].join(':');
+                var nc_token = [appkey, (new Date()).getTime(), Math.random()].join(':');
                 var nc = NoCaptcha.init({
                     renderTo: '#nc',
                     appkey: appkey,
