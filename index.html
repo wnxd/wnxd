@@ -27,13 +27,14 @@
                 return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
             var appkey = getParameterByName("appkey");
-            console.log(appkey);
+            var scene = getParameterByName("scene");
+            console.log(appkey, scene);
             if (appkey) {
                 var nc_token = [appkey, (new Date()).getTime(), Math.random()].join(':');
                 var nc = NoCaptcha.init({
                     renderTo: '#nc',
                     appkey: appkey,
-                    scene: 'nc_activity_h5',
+                    scene: scene,
                     token: nc_token,
                     language: "cn",
                     timeout: 10000,
