@@ -42,6 +42,11 @@
                     console.log(data.sig);
                 },
                 error: function (s) {
+                    var obj = {
+                        "error": s
+                    };
+                    rs = document.getElementById('nc_rs');
+                    rs.innerText = JSON.stringify(obj);
                     console.log(s, "验证失败");
                 }
             });
